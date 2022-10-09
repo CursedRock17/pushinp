@@ -1,0 +1,26 @@
+{
+    "prompts": 
+    [
+        {
+            "id" : 0,
+            "quote" : "When you win the game"
+        },
+        {
+            "id" : 1,
+            "quote" : "Finally fixing that bug"
+        },
+        {
+            "id" : 2,
+            "quote" : "You Debugging"
+        },
+        {
+            "id" : 3,
+            "quote" : "What a 10x developer looks like"
+        },
+        {
+            "id" : 4,
+            "quote" : "When a junior dev comes to you for help"
+        }
+        
+    ]
+}

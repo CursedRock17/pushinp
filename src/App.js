@@ -1,33 +1,23 @@
 import './App.css';
-import Pusher from 'pusher-js'
+import { Home } from './Routes/Home';
+import { NoPage} from "./Routes/NoPage"
+import { GamePage} from './Routes/Game'
+
+import { BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 
 function App() {
-  const bob = () => {
-      
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-  
-    var pusher = new Pusher('93bc0f8bfdfe83f0c6a9', {
-      cluster: 'us2'
-    });
-
-    var channel = pusher.subscribe('my-channel');
-    channel.bind("pusher:subscription_count", (data) => {
-      console.log(data.subscription_count);
-      console.log(channel.subscription_count);
-    });
-  }
 
   return (
-    <>
-      <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
-      <h1>Pusher Test</h1>
-      <button
-      onClick={(e) => bob(e.target.value)}
-      >
-        Bob
-      </button>
-    </>
+    <BrowserRouter>
+      <div className='App'>
+      <script src="https://js.pusher.com/7.2.0/pusher.min.js"></script>
+        <Routes>
+          <Route path="/" element={ <Home />}  />
+          <Route path="*" element={ < NoPage />}  />
+          <Route path="Game/:gameid" element={ < GamePage />}  />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
