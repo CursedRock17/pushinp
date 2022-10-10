@@ -20,6 +20,10 @@
         {
             "id" : 4,
             "quote" : "When a junior dev comes to you for help"
+        },
+        {
+            "id" : 5,
+            "quote" : "Crashing Production on a Friday"
         }
         
     ]

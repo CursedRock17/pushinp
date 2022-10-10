@@ -7,9 +7,8 @@ const JoinButton = (props) => {
     const navigate = useNavigate();
     const [gameId, setGameId] = useState(0);
 
-    const UpdateCount = () => {
-        //Need to update count only in useEffect or else theres too much loading
-        console.log("Bob")
+    const UpdateCount = async (username) => {
+        //Need this pusher object to monitor who joins
         const pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
             cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER
         });
@@ -22,24 +21,20 @@ const JoinButton = (props) => {
             setGameId(next_game);
         })
 
-        display_channel.bind('message', data => {
-            console.log(data.data);
-        });
+        //We will need to send the username to a pool of usernames where it will be remebered
+        console.log("Sent")
     }
 
-    const JoinQueue = (user) => {
+    const JoinQueue = (username) => {
+        UpdateCount(username);
         navigate("/Game/" + gameId)
     }
-
-    useEffect(() => {
-        UpdateCount();
-    }, [])
 
     return (
         <div className="WholePage">
             <button
             className='JoinButton'
-            onClick={(user) => JoinQueue(user.target.value)}
+            onClick={() => JoinQueue(props.username)}
             >
                 Join Queue {props.username}
             </button>

@@ -1,26 +1,34 @@
 
-.HomeLink {
+.HeaderTwo {
     display: flex;
     min-height: 5vh;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: calc(10px + 2vmin);
+    font-size: calc(5px + 2vmin);
     color: white;
 }
 
-.HomeLink:hover {
-    box-shadow: 1px 1px 5px 0px yellow;
-    text-shadow: 1px 1px 5px 0px yellow;
-    cursor: pointer;
+.InfoTotal {
+    background-color: rgb(104, 94, 113);
+    padding: 2vw;
+    margin: 2vw;
 }
 
-.HeaderTwo {
-        display: flex;
-        min-height: 5vh;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-size: calc(5px + 2vmin);
-        color: white;
+.GameInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.GameBoard {
+    background-color: blueviolet;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   
+}
+
+.TopSubsectionBoard {
+    display: flex;
+    justify-content: center;
 }

@@ -3,12 +3,12 @@ const express = require('express')
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const Pusher = require('pusher');
-const path = require('path');
 
 const app = express()
 const port = 3001
 
 //App Settings
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
@@ -24,21 +24,16 @@ const pusher = new Pusher({
 
 //App uses
 
-app.set('PORT', port || 5000);
-
-//Getting HTML
-app.get('/', (req, res) => {
-    //res.sendFile(path.join(__dirname, '../public/index.html'));
-    //res.render('../index.js');
-  });
+app.set('PORT', port);
 
 app.post('Game/:id', (req, res) => {
 
 })
 
-app.post('/message', (req, res) => {
+//Retrieve the current usernames
+app.post('/usernames', (req, res) => {
     const payload = req.body;
-    pusher.trigger('chat', 'message', payload);
+    pusher.trigger('displayed', 'usernames', payload);
     res.send(payload);
 })
 
