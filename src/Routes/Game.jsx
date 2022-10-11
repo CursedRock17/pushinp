@@ -11,6 +11,12 @@ import { TimeCheck } from "../memeComponents/TimeCheck"
 function GamePage () {
     const [currentPlayers, setCurrentPlayers] = useState(0);
     const [playerScore, setPlayerScore] = useState(0);
+    const [currentRound, setCurrentRound] = useState(0);;
+    const [voting, setVoting] = useState(false)
+
+    const SwitchMode = () => {
+        setVoting(true);
+    }
 
     const RetrieveCount = () => {
         const pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
@@ -53,15 +59,19 @@ function GamePage () {
                         <h2 className='HeaderTwo'> Game Started </h2>
                         <div className='GameInfo'>
                             <h2 className='HeaderTwo'> Your Score: {playerScore} </h2>
-                            <TimeCheck />
+                            <h2 className='HeaderTwo'> Current Round: {currentRound} </h2>
+                            <TimeCheck SwitchMode={() => SwitchMode()} />
                         </div>
                     </div>
                     <div className='GameBoard'>
                         <div className='TopSubsectionBoard'>
                             <PromptComponent />
-                            <CardsList />
                         </div>
-                        <CardHolder />
+                        {
+                            voting ? 
+                            <CardsList /> :
+                            <CardHolder round={currentRound}/>
+                        }
                     </div>
                 </div>
             </>

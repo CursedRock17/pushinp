@@ -7,7 +7,7 @@ const JoinButton = (props) => {
     const navigate = useNavigate();
     const [gameId, setGameId] = useState(0);
 
-    const UpdateCount = async (username) => {
+    const UpdateCount = async () => {
         //Need this pusher object to monitor who joins
         const pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
             cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER
@@ -26,8 +26,8 @@ const JoinButton = (props) => {
     }
 
     const JoinQueue = (username) => {
-        UpdateCount(username);
-        navigate("/Game/" + gameId)
+        UpdateCount();
+        navigate("/Game/" + gameId + "/?username=" + username)
     }
 
     return (
