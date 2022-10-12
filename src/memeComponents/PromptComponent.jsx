@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react'
 //Local Imports
 import Prompts from "./prompts.json"
 
-const PromptComponent = () => {
+const PromptComponent = (props) => {
     const [currentPromptId, setCurrentPromptId] = useState(0);
 
     //Get a random card from the list of cards 
     useEffect(() => {
-        setCurrentPromptId(Math.floor(Math.random() * Prompts.prompts.length))
-    }, [])
+        setCurrentPromptId([props.newPrompt])
+    }, [props.newPrompt])
 
     return (
         <div>

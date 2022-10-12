@@ -29,33 +29,11 @@ var pusher = new Pusher({
 app.set('PORT', port);
 
 //Send the current cards
-app.post('/cards', (req, res) => {
+app.post('/cards/:gameid', (req, res) => {
     const payload = req.body;
-    pusher.trigger('displayed', 'cards', payload).catch((error) => {
+    pusher.trigger('displayed', "cards", payload).catch((error) => {
         console.log("Error: ", error)
    });
-    res.send(payload);
-})
-
-//Receive the current cards
-
-app.get('/dropdown', (req, res) => {
-    const payload = req.body;
-    console.log(payload)
-    res.send(payload);
-})
-
-//Duality of Prompts
-app.post('/prompts', (req, res) => {
-    const payload = req.body;
-    pusher.trigger('displayed', 'prompts', payload).catch((error) => {
-        console.log("Error: ", error)
-   });
-    res.send(payload);
-})
-
-app.get('/prompts', (req, res) => {
-    const payload = req.body;
     res.send(payload);
 })
 

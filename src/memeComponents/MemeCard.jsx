@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const MemeCard = (props) => {
-    const SelectCard = async (mode) => {
+    const SelectCard = async () => {
         if("Choosing"){
-            console.log("Choosen")
             //This will remove and add a new card
             props.Refresh(props.id)
     
@@ -14,12 +13,15 @@ const MemeCard = (props) => {
             const CardObject = {
                 username: props.username,
                 image: props.image,
+                score: props.score
             }
             
-            await axios.post("http://localhost:3001/cards", CardObject);
-        }
-        else if("Voting") {
-            console.log("Voted")
+            props.setPlayerScore(props.score)
+
+            const postlink = `http://localhost:3001/cards/0`
+            props.SwitchMode("voted");
+
+            await axios.post(postlink, CardObject);
         }
     }
 
@@ -27,6 +29,7 @@ const MemeCard = (props) => {
         <button
         onClick={() => SelectCard(props.mode)}
         className="MemeCardContainer"
+        disabled={props.disabled}
         >
             <img className="MemeImage" src={props.image} alt={props.description}></img>
         </button>

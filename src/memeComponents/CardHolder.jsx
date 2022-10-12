@@ -27,7 +27,7 @@ const CardHolder = (props) => {
         //Need to find the meme and remove it from memes to use
         const TempMemes = MemesToUse.filter(CurrentMeme => MemeId !== CurrentMeme.id);
         TempMemes.push(SetRandomMemes()[0]);
-
+        
         setLastRandomMeme({ 
             minRand: lastRandomMeme.maxRand,
             maxRand: lastRandomMeme.maxRand + 1
@@ -35,6 +35,7 @@ const CardHolder = (props) => {
         
         //Now set this array to the filtered one
         setMemesToUse(TempMemes);
+        //No need to let them click
     }
 
 
@@ -49,7 +50,7 @@ const CardHolder = (props) => {
 
     const CurrentCards = MemesToUse.map((meme) => 
             <li>
-                <MemeCard mode="Choosing" username={username} Refresh={() => RefreshMeme(meme.id)} image={meme.image} id={meme.id} description={meme.description}/>
+                <MemeCard setPlayerScore={(score) => props.setPlayerScore(playerScore => playerScore + score)} score={meme.score} SwitchMode={(mode) => props.SwitchMode(mode)} disabled={props.voted} mode="Choosing" username={username} Refresh={() => RefreshMeme(meme.id)} image={meme.image} id={meme.id} description={meme.description}/>
             </li>
     )
 
