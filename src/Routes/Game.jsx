@@ -1,13 +1,18 @@
 import React, { useState , useEffect} from 'react'
 import Pusher from 'pusher-js'
+import { useSearchParams } from 'react-router-dom'
+import axios from 'axios'
+
 import "./Routes.css"
+import Prompts from '../memeComponents/prompts.json'
+
 import { Navbar } from '../MainComponents/Navbar';
 import { Footer } from '../MainComponents/Footer';
 import { CardHolder } from '../memeComponents/CardHolder';
 import { PromptComponent } from '../memeComponents/PromptComponent';
 import { CardsList } from '../memeComponents/CardsList';
 import { TimeCheck } from "../memeComponents/TimeCheck" 
-import Prompts from '../memeComponents/prompts.json'
+import { Endgame } from '../EndGame/Endgame';
 
 function GamePage () {
     const [currentPlayers, setCurrentPlayers] = useState(0);
@@ -15,14 +20,27 @@ function GamePage () {
     const [currentRound, setCurrentRound] = useState(1);
     const [newPrompt, setNewPrompt] = useState(0);
     const [voting, setVoting] = useState(false)
+    const [searchParams, setSearchParams] = useSearchParams();
 
+    const MaxRounds = 10;
+    
     const SwitchMode = (mode) => {
-        setCurrentRound(currentRound => currentRound + 1)
         if(mode === "reset"){
             setVoting(false);
+
+            //This ups the round count every single time 15 seconds goes by. then sends in the score
+            setCurrentRound(currentRound => currentRound + 1)
+            if(currentRound === MaxRounds){
+                const scoreObject = {
+                    score: playerScore,
+                    username: searchParams.get('username')
+                }
+                axios.post("http://localhost:3001/scores/0", scoreObject)
+            }
             
-        //Get a new prompt
-        setNewPrompt(Math.floor(Math.random() * Prompts.prompts.length));
+            
+            //Get a new prompt
+            setNewPrompt(Math.floor(Math.random() * Prompts.prompts.length));
         }
         else {
             setVoting(true);
@@ -46,7 +64,7 @@ function GamePage () {
     }
 
     useEffect(() => {
-        //RetrieveCount();
+        RetrieveCount();
     }, [])
 
         return (
@@ -55,7 +73,7 @@ function GamePage () {
         {
             currentPlayers !== 0 ? 
             <>
-                <div>
+                <div className='FillerSpace'>
                     <h2 className='HeaderTwo'>
                         Loading...
                     </h2>
@@ -64,6 +82,9 @@ function GamePage () {
                     </h2>
                 </div>
             </> :  
+            currentRound > MaxRounds ?
+            <Endgame /> 
+            :
             <>
                 <div>
                     <div className='InfoTotal'>

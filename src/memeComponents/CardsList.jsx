@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { MemeCard } from "./MemeCard"
 
 const CardsList = () => {
-    const memes = [{}];
+    const [memes, setMemes] = useState([]);
 
     //Create Pusher Object
     const pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
@@ -15,21 +15,24 @@ const CardsList = () => {
         //This will remove and add a new card
         //We will meed to impliment logic to add cards to pusher list by adding them to the channel
         const CardsChannel = pusher.subscribe('displayed');
-        console.log("Selected")
         CardsChannel.bind('cards', (data) => {
             //Should be able to taken all the chosen memes and add them to the array
-            console.log(data);
-            memes.push(data);
+            if(memes.length > 4){
+                setMemes([])
+            }
+            else {
+                setMemes([...memes, data])
+            }
         });
     }
 
     useEffect(() => {
         SelectCard();
-    }, [])
+    })
 
     const CurrentCards = memes.map((meme) => 
             <li>
-                <MemeCard mode="Voting" image={meme.image} id={meme.id} description={meme.description}/>
+                <MemeCard disabled={true} mode="Voting" image={meme.image} id={meme.id} description={meme.description}/>
             </li>
     )
 

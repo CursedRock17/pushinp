@@ -11,7 +11,7 @@ const Home = () => {
   const [username, setUsername] = useState("default-1284812");
 
     return (
-        <div>
+        <div className="EvenHome">
             <Navbar />
             <UsernameForm setUsername={setUsername} />
             <JoinButton username={username} />

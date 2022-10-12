@@ -1,3 +1,12 @@
+.FillerSpace {
+    min-height: 2vmin;
+    height: 75vmax;
+}
+
+.EvenHome {
+    display: flex;
+    flex-direction: column;
+}
 
 .HeaderTwo {
     display: flex;

@@ -37,6 +37,14 @@ app.post('/cards/:gameid', (req, res) => {
     res.send(payload);
 })
 
+app.post('/scores/:gameid', (req, res) => {
+    const payload = req.body;
+    pusher.trigger('displayed', "scores", payload).catch((error) => {
+        console.log("Error: ", error)
+   });
+    res.send(payload);
+})
+
 app.listen(app.get('PORT'), () => {
     console.log("Listening on port " + app.get('PORT'));
 })

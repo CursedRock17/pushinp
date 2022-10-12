@@ -56,3 +56,8 @@
     text-align: center;
     margin: 1%;
 }
+
+.FillingSpace {
+    min-height: 2vmin;
+    height: 70vmax;
+}

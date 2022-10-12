@@ -3,7 +3,7 @@ import './QueueComponents.css'
 const UsernameForm = (props) => {
 
     return (
-        <div>
+        <div className='FillingSpace'>
             <form>
                 <input
                 className="UsernameForm"
