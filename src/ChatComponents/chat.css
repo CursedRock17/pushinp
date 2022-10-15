@@ -1,0 +1,81 @@
+.ChatContainer {
+    background-color: rgb(104, 94, 113);
+    padding: 2vw;
+    margin: 2vw;
+    margin-right: 8vw;
+    display: flex;
+    min-height: 2vmax;
+    height: 75vmax;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.BoxContainer {
+    background-color: rgb(104, 94, 113);
+    padding: 2vw;
+    margin: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25vh;
+    width: 35vh;
+    display: flex;
+}
+
+.MessageSpace {
+    border-radius: 10px;
+    height: 20vh;
+    width: 30vh;
+    font-size: calc(2vmin);
+}
+
+.MessageSpace:hover {
+    background: aquamarine;
+    box-shadow: 1px 1px 5px 0px yellow;
+    text-shadow: 1px 1px 5px 0px yellow;
+}
+
+.SubmitButton {
+    border-radius: 10px;
+    background-color: #1d5dde;
+    color: white;
+    height: 2vh;
+    width: 10vh;
+}
+
+.SubmitButton:hover {
+    box-shadow: 1px 1px 5px 0px yellow;
+    text-shadow: 1px 1px 5px 0px yellow;
+    cursor: pointer;
+}
+
+.MessageBox {
+    border-radius: 10px;
+    background-color: rgb(104, 94, 113);
+    height: 25vh;
+    width: 25vw;
+    margin: 2vmin;
+}
+
+
+.ExplainingHeader {
+    color: white;
+    font-size: calc(10px + 2vmin);
+}
+
+.NameHeader {
+    color: white;
+    font-size: calc(5px + 2vmin);
+    padding: 2vmin;
+}
+
+.MessageClass {
+    color: white;
+    font-size: calc(5px + 1vmin);
+    padding: 1vmin;
+}
+
+.MessagesList {
+    list-style-type: none;
+    display: flex;
+}

@@ -1,11 +1,12 @@
 import Pusher from 'pusher-js'
 import './QueueComponents.css'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const JoinButton = (props) => {
     const navigate = useNavigate();
-    const [gameId, setGameId] = useState(0);
+    const [roomId, setRoomId] = useState(0);
+    const subscriptionAddress = props.category + '/' + roomId;
 
     const UpdateCount = async () => {
         //Need this pusher object to monitor who joins
@@ -13,30 +14,28 @@ const JoinButton = (props) => {
             cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER
         });
         
-        const display_channel = pusher.subscribe('displayed');
+
+        const display_channel = pusher.subscribe(subscriptionAddress);
         //Check if that lobby is full, if it is, then make a new one
         display_channel.bind('pusher:subscription_count', (data) => {
             //To calculate the game, take the count and divide by lobby size
-            const next_game = Math.floor((data.subscription_count - 1) / 8);
-            setGameId(next_game);
+            const next_game = Math.floor((data.subscription_count - 1) / 4);
+            setRoomId(next_game);
         })
-
-        //We will need to send the username to a pool of usernames where it will be remebered
-        console.log("Sent")
     }
 
-    const JoinQueue = (username) => {
+    const JoinRoom = (username) => {
         UpdateCount();
-        navigate("/Game/" + gameId + "/?username=" + username)
+        navigate("/Room/" + subscriptionAddress + "/?username=" + username)
     }
 
     return (
         <div className="WholePage">
             <button
             className='JoinButton'
-            onClick={() => JoinQueue(props.username)}
+            onClick={() => JoinRoom(props.username)}
             >
-                Join Queue {props.username}
+                Join {props.category} Room {props.roomId}
             </button>
         </div>
     )

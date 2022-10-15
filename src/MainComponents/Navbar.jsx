@@ -5,7 +5,7 @@ import { Home } from "../Routes/Home"
 const Navbar = () => {
         return (
             <Link  to="/" element={<Home />}>
-                <h1 className='App-header'>Pushin P </h1>
+                <h1 className='App-header'>Homework Pusher </h1>
             </Link>
         )
 }

@@ -3,7 +3,7 @@ import { Home } from './Routes/Home';
 import { NoPage} from "./Routes/NoPage"
 import { GamePage} from './Routes/Game'
 
-import { BrowserRouter, Routes, Route, Link} from 'react-router-dom'
+import { BrowserRouter, Routes, Route} from 'react-router-dom'
 
 function App() {
 
@@ -14,7 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={ <Home />}  />
           <Route path="*" element={ < NoPage />}  />
-          <Route path="Game/:gameid" element={ < GamePage />}  />
+          <Route path="Room/:roomname/:roomid" element={ < GamePage />}  />
         </Routes>
       </div>
     </BrowserRouter>

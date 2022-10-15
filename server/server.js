@@ -29,17 +29,11 @@ var pusher = new Pusher({
 app.set('PORT', port);
 
 //Send the current cards
-app.post('/cards/:gameid', (req, res) => {
+app.post('/:roomname/:roomid', (req, res) => {
     const payload = req.body;
-    pusher.trigger('displayed', "cards", payload).catch((error) => {
-        console.log("Error: ", error)
-   });
-    res.send(payload);
-})
-
-app.post('/scores/:gameid', (req, res) => {
-    const payload = req.body;
-    pusher.trigger('displayed', "scores", payload).catch((error) => {
+    //req.body.roomStr
+    console.log(req.body.roomStr)
+    pusher.trigger(req.body.roomStr, "message", payload).catch((error) => {
         console.log("Error: ", error)
    });
     res.send(payload);

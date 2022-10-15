@@ -1,4 +1,4 @@
-# Pushin P Meme App
+# Homework Pusher the HW helping App
 
 A simple, fun game using pusher-js to communicate in real time with other gamers
 
