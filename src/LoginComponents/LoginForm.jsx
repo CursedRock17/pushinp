@@ -24,13 +24,13 @@ const LoginForm = (props) => {
                 onChange={(e) => props.setCategory(e.target.value)}
             >
                 <option value="Calculus"> Calculus </option>
-                <option value="Physics Mechanics"> Physics_Mechanics </option>
-                <option value="English Lang"> English_Lang </option>
-                <option value="English Lit"> English_Lit </option>
-                <option value="Basic Programming"> Basic_Programming </option>
-                <option value="Linear Algebra"> Linear_Algebra </option>
+                <option value="Physics_Mechanics"> Physics Mechanics </option>
+                <option value="English_Lang"> English Lang </option>
+                <option value="English_Lit"> English Lit </option>
+                <option value="Basic_Programming"> Basic Programming </option>
+                <option value="Linear_Algebra"> Linear Algebra </option>
                 <option value="Chemistry"> Chemistry </option>
-                <option value="World History"> World_History </option>
+                <option value="World_History"> World History </option>
             </select>
         </div>
     )

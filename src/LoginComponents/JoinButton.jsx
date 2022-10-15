@@ -6,7 +6,9 @@ import { useNavigate } from 'react-router-dom'
 const JoinButton = (props) => {
     const navigate = useNavigate();
     const [roomId, setRoomId] = useState(0);
-    const subscriptionAddress = props.category + '/' + roomId;
+    
+    const subscriptionAddress = props.category + '_' + roomId;
+    const navigateAddress = props.category + '/' + roomId;
 
     const UpdateCount = async () => {
         //Need this pusher object to monitor who joins
@@ -26,7 +28,7 @@ const JoinButton = (props) => {
 
     const JoinRoom = (username) => {
         UpdateCount();
-        navigate("/Room/" + subscriptionAddress + "/?username=" + username)
+        navigate("/Room/" + navigateAddress + "/?username=" + username)
     }
 
     return (

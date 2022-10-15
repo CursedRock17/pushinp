@@ -10,8 +10,8 @@ const ChatBox = () => {
 
     const SubmitMessage = () => {
         //Set up the axios link to send the data to 
-        const roomString = URLParams.roomname + '/' + URLParams.roomid
-        const postString = "http://www.localhost:3001/" + roomString
+        const roomString = URLParams.roomname + '_' + URLParams.roomid
+        const postString = "http://www.localhost:3001/" + (URLParams.roomname + '/' + URLParams.roomid)
         
         //Message Data is all the Data that will get put into the message component
         const messageData = {
@@ -20,7 +20,7 @@ const ChatBox = () => {
             username: searchParams.get('username')
         };
         
-        console.log(messageData)
+
         axios.post(postString, messageData);
     }
 

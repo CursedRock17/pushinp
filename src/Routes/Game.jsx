@@ -10,6 +10,7 @@ import { Navbar } from '../MainComponents/Navbar';
 import { Footer } from '../MainComponents/Footer';
 import { ChatBox } from '../ChatComponents/ChatBox'
 import { ChatMessages } from '../ChatComponents/ChatMessages'
+import { ImageComponent } from '../ChatComponents/ImageComponent'
 
 function GamePage (props) {
     const [currentPeople, setcurrentPeople] = useState(0);
@@ -23,7 +24,7 @@ function GamePage (props) {
             cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER
         });
         
-        const subString = URLParams.roomname + '/' + URLParams.roomid;
+        const subString = URLParams.roomname + '_' + URLParams.roomid;
 
         const display_channel = pusher.subscribe(subString);
         //Check if that lobby is full, if it is, then make a new one
@@ -57,6 +58,7 @@ function GamePage (props) {
                         </div>
                     </div>
                     <div className='GameBoard'>
+                            <ImageComponent />
                             <ChatMessages />
                         <div className='TopSubsectionBoard'>
                             <ChatBox />
