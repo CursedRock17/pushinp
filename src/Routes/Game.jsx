@@ -58,7 +58,7 @@ function GamePage (props) {
                         </div>
                     </div>
                     <div className='GameBoard'>
-                            <ImageComponent />
+                            <ImageComponent params={useParams()} />
                             <ChatMessages />
                         <div className='TopSubsectionBoard'>
                             <ChatBox />

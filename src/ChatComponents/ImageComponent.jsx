@@ -1,6 +1,10 @@
 import "./chat.css"
-import React from "react"
+import React, { Component } from "react";
 import axios from "axios"
+import Pusher from "pusher-js";
+import { useParams } from "react-router-dom";
+
+
 
 class ImageComponent extends React.Component {
     constructor(props){
@@ -11,52 +15,73 @@ class ImageComponent extends React.Component {
         this.ChangeFile = this.ChangeFile.bind(this);
     }
 
-    ChangeFile = (event) => {
+
+    ChangeFile = async (event) => {
         event.preventDefault();
-        console.log(event.target.files)
-        this.setState({
-            selectedFile: event.target.files[0]
-        })
+        const roomString = this.props.params.roomname + '_' + this.props.params.roomid
+        const chosenImage = event.target.files[0]
+        const postString = "http://localhost:3001/uploadfile"
+
+        const PostData = {
+            roomStr: roomString,
+            image: chosenImage
+        }
+
+        const formData = new FormData();
+        formData.append(
+          'image',
+          chosenImage,
+          chosenImage.name,
+          roomString
+        );
+        
+        console.log(PostData)
+        axios.post(postString, formData)
     }
 
-    FileUpload = () => {
-        const formData = new FormData();
-        console.log(formData)
-        formData.append(
-        "myFile",
-        this.state.selectedFile,
-        this.state.selectedFile.name
-            );
-        // console log uploaded file details
-        console.log(this.state.selectedFile);
-        // user send req to the server
-        axios.post("https://localhost:3001/uploadfile", formData);
+    componentDidMount(){
+        const roomString = this.props.params.roomname + '_' + this.props.params.roomid;
+
+        const pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
+            cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER
+        });
+        const display_channel = pusher.subscribe(roomString);
+        display_channel.bind('images', (data) => {
+            //Data will be in the form of the url of the image to look for
+            console.log(data.newDoc);
+            this.setState({
+                selectedFile: data.newDoc.secure_url
+            })
+        })
+        
     }
 
     render(){
         return (
-            <div>
+        <div>        
+            <div className="ImageComponent">
+                <h1 className="NameHeader">
+                    Upload Some Work
+                </h1>
                 <input
-                type="file"
-                id="imageUploader"
-                onClick={this.ChangeFile}
+                    type="file"
+                    id="imageUploader"
+                    accept=".jpeg, .png, .jpg"
+                    className="imageUploader"
+                    onChange={(e) => this.ChangeFile(e)}
                 />
-                Upload some work
-                {
-                    this.state.selectedFile === undefined ?
-                    <></> :
-                    <button
-                    className="UploadButton"
-                    onClick={this.FileUpload}
-                    >
-                        Add Picture
-                    </button>
-
-                }
-                <img alt="Missing" src={this.state.selectedFile} />
             </div>
+            {
+                this.state.selectedFile !== undefined ?
+                <img alt="NoImage" height={200} width={200} src={this.state.selectedFile} /> :
+                <></>
+            }
+        </div>
         )
     }
 }
 
 export { ImageComponent }
+
+
+

@@ -1,10 +1,12 @@
 //Configure .env variables
 require('dotenv').config({path: '../.env'});
 //Modules
-const express = require('express')
-const cors = require('cors');
-const fileUpload = require('express-fileupload');
+const express = require('express');
+const multipart = require('connect-multiparty');
 const bodyParser = require('body-parser');
+const cloudinary = require('cloudinary');
+const cors = require('cors');
+const Datastore = require('nedb');
 const Pusher = require('pusher');
 
 
@@ -16,7 +18,12 @@ const port = 3001
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use(fileUpload());
+
+// Setup multiparty
+const multipartMiddleware = multipart();
+
+//Create a asmall datastore object
+const db = new Datastore();
 
 //Create pusher object
 var pusher = new Pusher({
@@ -26,6 +33,12 @@ var pusher = new Pusher({
     cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
 });
 
+//Create Cloudinary Object
+cloudinary.config({ 
+    cloud_name: process.env.REACT_APP_CLOUDNAME, 
+    api_key: process.env.REACT_APP_APIKEY, 
+    api_secret: process.env.REACT_APP_APISECRET
+  });
 //App uses
 
 app.set('PORT', port);
@@ -38,20 +51,22 @@ app.post('/:roomname/:roomid', (req, res) => {
 })
 
 //Send the images from files
-app.post('uploadfile', (req, res) => {
-    if(!req.files){
-        return res.status(404).send({ msg: "File not Found"})
-    }
-
-    const imageFile = req.files.file;
-       //  mv() method places the file inside public directory
-       imageFile.mv(`${__dirname}/public/${imageFile.name}`, function (err) {
-        if (err) {
-            console.log(err)
-            return res.status(500).send({ msg: "Error occured" });
-        }
-        // returing the response with file path and name
-        return res.send({name: imageFile.name, path: `/${imageFile.name}`});
+app.post('/uploadfile',  multipartMiddleware, (req, res) => {
+    console.log(req)
+    cloudinary.v2.uploader.upload(req.files.image.path , {}, 
+    function(error, result) {
+        if (error) {
+            console.log(error)
+            return res.status(500).send(error);
+        } 
+        //req.body.roomString
+        //Make an entry in the database then uplaod with pusher
+        db.insert(Object.assign({}, result, req.body), (err, newDoc) => {
+            pusher.trigger('Calculus_0' , 'images', {
+                newDoc
+            });
+        res.status(200).json(newDoc);
+        })
     });
 })
 

@@ -73,8 +73,6 @@ const ChatMessages = () => {
 
             setMessages(tempArray);
         })
-
-        console.log(messages)
         
     } 
 
