@@ -19,7 +19,7 @@ class ImageComponent extends React.Component {
         event.preventDefault();
         
         const roomString = this.props.params.roomname + '_' + this.props.params.roomid
-        const postString = "http://localhost:3001/uploadfile"
+        const postString = "https://homeworkhelperpusher.herokuapp.com/uploadfile"
         
         const chosenImage = event.target.files[0]
         chosenImage.roomStr = roomString
