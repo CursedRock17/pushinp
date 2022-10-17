@@ -11,7 +11,7 @@ const ChatBox = () => {
     const SubmitMessage = () => {
         //Set up the axios link to send the data to 
         const roomString = URLParams.roomname + '_' + URLParams.roomid
-        const postString = "https://homeworkhelperpusher.herokuapp.com/" + (URLParams.roomname + '/' + URLParams.roomid)
+        const postString = "http://homeworkhelperpusher.herokuapp.com/" + (URLParams.roomname + '/' + URLParams.roomid)
 
         //Message Data is all the Data that will get put into the message component
         const messageData = {

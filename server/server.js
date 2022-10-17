@@ -1,5 +1,3 @@
-//Configure .env variables
-require('dotenv').config({path: '../.env'});
 //Modules
 const express = require('express');
 const multipart = require('connect-multiparty');
@@ -13,11 +11,19 @@ const path = require('path')
 const app = express()
 const port = process.env.PORT || 3001
 
+//Configure .env variables
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config({ path: './.env'});
+  }
+else {
+    require('dotenv').config({ path: './.env'});
+}
 
 //App Settings
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.set('PORT', port);
 
 // Setup multiparty
 const multipartMiddleware = multipart();
@@ -42,18 +48,18 @@ cloudinary.config({
 //App uses
 
 
-app.set('PORT', port);
 
 
-/*
+
 //Load up the main file
-const appPath = path.join(__dirname, '..', 'public');
+const appPath = path.join(__dirname, '../build');
+
 app.use(express.static(appPath));
 //Load all files at all links like this
 app.get('*', (req, res) => {
-    res.sendFile(path.join(appPath, 'index.html'))
+    res.sendFile(path.join(path.join(__dirname+'/../build/index.html')))
 })
-*/
+
 
 //Send the current cards
 app.post('/:roomname/:roomid', (req, res) => {
