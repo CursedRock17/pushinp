@@ -27,7 +27,7 @@
     border-radius: 18px;
     min-height: 2vh;
     min-width: 2vw;
-    font-size: calc(5px + vmin);
+    font-size: calc(5px + 1vmin);
     text-align: center;
     margin: 1%;
 }
@@ -52,7 +52,7 @@
     border-radius:10 px;
     min-height: vh;
     min-width: 20vw;
-    font-size: calc(5px + vmin);
+    font-size: calc(5px + 1vmin);
     text-align: center;
     margin: 1%;
 }
