@@ -1,6 +1,7 @@
 # Homework Pusher the HW helping App
 
-A simple, fun game using pusher-js to communicate in real time with other gamers
+An app where people can come together and discuss homework problems and study together.  
+Simply add a photo of a homework problem and discuss with others who join the room related to that subject, there's a limit to people in a room too that way different people can discuss different problems.
 
 ## App Stack: 
     - React
@@ -16,8 +17,7 @@ cd PushinP
 
 # Running App
 
-Running this app will take multiple instances because it's a game, so load up 
-some terminals and simply run 
+Running this app will take multiple instances so load up some terminals and simply run 
 
 ```
 npm start

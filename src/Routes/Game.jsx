@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState , useEffect} from 'react'
 import Pusher from 'pusher-js'
-import { useParams, useSearchParams } from 'react-router-dom'
-import axios from 'axios'
+import { useParams } from 'react-router-dom'
 
 import "./Routes.css"
 
@@ -14,9 +13,9 @@ import { ImageComponent } from '../ChatComponents/ImageComponent'
 
 function GamePage (props) {
     const [currentPeople, setcurrentPeople] = useState(0);
-    const [searchParams] = useSearchParams();
     
     const URLParams = useParams();
+    const subString = URLParams.roomname + '_' + URLParams.roomid;
 
 
     const RetrieveCount = () => {
@@ -24,7 +23,6 @@ function GamePage (props) {
             cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER
         });
         
-        const subString = URLParams.roomname + '_' + URLParams.roomid;
 
         const display_channel = pusher.subscribe(subString);
         //Check if that lobby is full, if it is, then make a new one
@@ -59,7 +57,7 @@ function GamePage (props) {
                     </div>
                     <div className='GameBoard'>
                             <ImageComponent params={useParams()} />
-                            <ChatMessages />
+                            <ChatMessages roomName={subString} />
                         <div className='TopSubsectionBoard'>
                             <ChatBox />
                         </div>

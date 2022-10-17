@@ -1,8 +1,7 @@
 import "./chat.css"
-import React, { Component } from "react";
+import React from "react";
 import axios from "axios"
 import Pusher from "pusher-js";
-import { useParams } from "react-router-dom";
 
 
 
@@ -18,25 +17,27 @@ class ImageComponent extends React.Component {
 
     ChangeFile = async (event) => {
         event.preventDefault();
+        
         const roomString = this.props.params.roomname + '_' + this.props.params.roomid
-        const chosenImage = event.target.files[0]
         const postString = "http://localhost:3001/uploadfile"
-
-        const PostData = {
-            roomStr: roomString,
-            image: chosenImage
-        }
+        
+        const chosenImage = event.target.files[0]
+        chosenImage.roomStr = roomString
 
         const formData = new FormData();
+
         formData.append(
           'image',
           chosenImage,
-          chosenImage.name,
-          roomString
+          roomString,
         );
-        
-        console.log(PostData)
-        axios.post(postString, formData)
+
+
+        axios.post(postString, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+              },
+        })
     }
 
     componentDidMount(){
@@ -65,7 +66,7 @@ class ImageComponent extends React.Component {
                 </h1>
                 <input
                     type="file"
-                    id="imageUploader"
+                    id={this.props.params.roomname + '_' + this.props.params.roomid}
                     accept=".jpeg, .png, .jpg"
                     className="imageUploader"
                     onChange={(e) => this.ChangeFile(e)}

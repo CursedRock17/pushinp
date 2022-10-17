@@ -12,7 +12,6 @@ const ChatBox = () => {
         //Set up the axios link to send the data to 
         const roomString = URLParams.roomname + '_' + URLParams.roomid
         const postString = "http://www.localhost:3001/" + (URLParams.roomname + '/' + URLParams.roomid)
-        
         //Message Data is all the Data that will get put into the message component
         const messageData = {
             msg: message,

@@ -9,7 +9,6 @@ const cors = require('cors');
 const Datastore = require('nedb');
 const Pusher = require('pusher');
 
-
 const app = express()
 const port = 3001
 
@@ -52,7 +51,6 @@ app.post('/:roomname/:roomid', (req, res) => {
 
 //Send the images from files
 app.post('/uploadfile',  multipartMiddleware, (req, res) => {
-    console.log(req)
     cloudinary.v2.uploader.upload(req.files.image.path , {}, 
     function(error, result) {
         if (error) {
@@ -62,7 +60,7 @@ app.post('/uploadfile',  multipartMiddleware, (req, res) => {
         //req.body.roomString
         //Make an entry in the database then uplaod with pusher
         db.insert(Object.assign({}, result, req.body), (err, newDoc) => {
-            pusher.trigger('Calculus_0' , 'images', {
+            pusher.trigger(req.files.image.name , 'images', {
                 newDoc
             });
         res.status(200).json(newDoc);
