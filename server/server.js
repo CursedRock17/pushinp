@@ -8,6 +8,7 @@ const cloudinary = require('cloudinary');
 const cors = require('cors');
 const Datastore = require('nedb');
 const Pusher = require('pusher');
+const path = require('path')
 
 const app = express()
 const port = process.env.PORT || 3001
@@ -40,7 +41,19 @@ cloudinary.config({
   });
 //App uses
 
+
 app.set('PORT', port);
+
+
+/*
+//Load up the main file
+const appPath = path.join(__dirname, '..', 'public');
+app.use(express.static(appPath));
+//Load all files at all links like this
+app.get('*', (req, res) => {
+    res.sendFile(path.join(appPath, 'index.html'))
+})
+*/
 
 //Send the current cards
 app.post('/:roomname/:roomid', (req, res) => {
