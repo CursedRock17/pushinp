@@ -10,7 +10,7 @@ const Datastore = require('nedb');
 const Pusher = require('pusher');
 
 const app = express()
-const port = 3001
+const port = process.env.PORT || 3001
 
 
 //App Settings
@@ -67,6 +67,10 @@ app.post('/uploadfile',  multipartMiddleware, (req, res) => {
         })
     });
 })
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build'))
+}
 
 app.listen(app.get('PORT'), () => {
     console.log("Listening on port " + app.get('PORT'));
